@@ -1,7 +1,7 @@
-import { getGameById, getGames } from "@/lib/games";
+import { getGameById, getGames, getGamePrivacyPolicy } from "@/lib/games";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import styles from "./game.module.css";
+import styles from "../game.module.css";
 
 export async function generateStaticParams() {
   const games = await getGames();
@@ -21,55 +21,48 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 
   return {
-    title: game.title,
-    description: game.description,
+    title: `Privacy Policy — ${game.title}`,
+    description: `Privacy policy for ${game.title}`,
   };
 }
 
-export default async function GamePage({ params }: { params: Promise<{ id: string }> }) {
+export default async function GamePrivacyPolicyPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const game = await getGameById(id);
+  const privacyPolicy = await getGamePrivacyPolicy(id);
 
-  if (!game) {
+  if (!game || !privacyPolicy) {
     notFound();
   }
 
   return (
     <div className={styles.container}>
-      <Link href="/" className={styles.backButton}>
-        ← Back to Home
+      <Link href={`/games/${game.id}`} className={styles.backButton}>
+        ← Back to {game.title}
       </Link>
 
       <article className={styles.gameDetail}>
         <header className={styles.header}>
-          <h1>{game.title}</h1>
-          <p className={styles.description}>{game.description}</p>
-          <div className={styles.meta}>
-            <span className={styles.category}>{game.category}</span>
-            <span className={styles.year}>{game.year}</span>
-            <div className={styles.tags}>
-              {game.tags.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
+          <h1>Privacy Policy</h1>
+          <p className={styles.description}>Privacy policy for {game.title}</p>
         </header>
 
         <div
           className={styles.content}
-          dangerouslySetInnerHTML={{ __html: markdownToHtml(game.content) }}
+          dangerouslySetInnerHTML={{ __html: markdownToHtml(privacyPolicy) }}
         />
 
         <footer className={styles.footer}>
-          <p>Created in {game.year} • {game.category} Game</p>
           <div className={styles.footerLinks}>
-            <Link href="/" className={styles.homeLink}>
-              ← Back to Portfolio
+            <Link href={`/games/${game.id}`} className={styles.homeLink}>
+              ← Back to {game.title}
             </Link>
-            <Link href={`/games/${game.id}/privacy-policy`} className={styles.privacyLink}>
-              Privacy Policy
+            <Link href="/" className={styles.privacyLink}>
+              Back to Portfolio
             </Link>
           </div>
         </footer>

@@ -16,6 +16,7 @@ export interface Game {
 
 export interface GameDetail extends Game {
   content: string;
+  privacyPolicy?: string;
 }
 
 export async function getGames(): Promise<Game[]> {
@@ -66,4 +67,22 @@ export async function getGameById(id: string): Promise<GameDetail | null> {
     ...frontmatter,
     content,
   };
+}
+
+export async function getGamePrivacyPolicy(id: string): Promise<string | null> {
+  const privacyPolicyPath = path.join(
+    process.cwd(),
+    "src",
+    "data",
+    "games",
+    "privacy-policies",
+    `${id}.md`
+  );
+
+  if (!fs.existsSync(privacyPolicyPath)) {
+    return null;
+  }
+
+  const fileContent = fs.readFileSync(privacyPolicyPath, "utf-8");
+  return fileContent;
 }
