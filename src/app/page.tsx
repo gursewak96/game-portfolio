@@ -1,65 +1,80 @@
-import Image from "next/image";
 import styles from "./page.module.css";
+import { getGames } from "@/lib/games";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const games = await getGames();
+  const hyperCasualGames = games.filter((g) => g.gameType === "Hyper Casual");
+  const fullGames = games.filter((g) => g.gameType === "Full Game");
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
+        <section className={styles.hero}>
+          <p className={styles.badge}>calm mode on 🍃</p>
+          <h1>Game Portfolio</h1>
           <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+            A cozy corner for your games, experiments, and dev journey. Keep it
+            playful, keep it positive, and let every project shine. 🎮✨
           </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          <div className={styles.ctas}>
+            <a className={styles.primary} href="#projects">
+              View Projects 🚀
+            </a>
+            <a className={styles.secondary} href="#about">
+              About Me 🌱
+            </a>
+          </div>
+        </section>
+
+        <section id="projects">
+          {hyperCasualGames.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Hyper Casual Games ✨</h2>
+              <div className={styles.grid}>
+                {hyperCasualGames.map((game) => (
+                  <Link key={game.id} href={game.link} className={styles.cardLink}>
+                    <article className={styles.card}>
+                      <h3>{game.title}</h3>
+                      <p>{game.description}</p>
+                      <div className={styles.cardMeta}>
+                        <span className={styles.category}>{game.category}</span>
+                        <span className={styles.year}>{game.year}</span>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+          {fullGames.length > 0 && (
+            <div className={styles.section}>
+              <h2 className={styles.sectionTitle}>Full Games 🎮</h2>
+              <div className={styles.grid}>
+                {fullGames.map((game) => (
+                  <Link key={game.id} href={game.link} className={styles.cardLink}>
+                    <article className={styles.card}>
+                      <h3>{game.title}</h3>
+                      <p>{game.description}</p>
+                      <div className={styles.cardMeta}>
+                        <span className={styles.category}>{game.category}</span>
+                        <span className={styles.year}>{game.year}</span>
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+
+        <section id="about" className={styles.about}>
+          <h2>Build With Good Vibes 😊</h2>
+          <p>
+            This portfolio is powered by Next.js and designed to feel calm,
+            bright, and optimistic.
+          </p>
+        </section>
       </main>
     </div>
   );

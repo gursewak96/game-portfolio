@@ -1,0 +1,139 @@
+.container {
+  --mint-100: #eef9ef;
+  --mint-700: #2d6b45;
+  --ink: #1f4b33;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 32px 16px;
+  background: linear-gradient(160deg, #f9fff8 0%, var(--mint-100) 48%, #f2fbf3 100%);
+}
+
+.backButton {
+  align-self: flex-start;
+  margin-bottom: 24px;
+  font-weight: 700;
+  color: var(--mint-700);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .backButton:hover {
+    background-color: rgba(133, 198, 139, 0.2);
+  }
+}
+
+.document {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+  background: #ffffff;
+  border: 2px solid rgba(56, 131, 77, 0.2);
+  border-radius: 24px;
+  padding: 48px;
+  box-shadow: 0 20px 40px rgba(50, 116, 72, 0.15);
+  animation: slideUp 600ms ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  margin-bottom: 36px;
+  border-bottom: 2px solid rgba(45, 107, 69, 0.15);
+  padding-bottom: 24px;
+}
+
+.header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.updated {
+  color: #7a9d85;
+  font-size: 0.9rem;
+}
+
+.section {
+  margin-bottom: 28px;
+}
+
+.section h2 {
+  font-size: 1.2rem;
+  color: var(--ink);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.section p {
+  color: #2f6544;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+.section ul {
+  color: #2f6544;
+  line-height: 1.8;
+  padding-left: 20px;
+}
+
+.section ul li {
+  margin-bottom: 8px;
+}
+
+.section strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.section code {
+  background: rgba(133, 198, 139, 0.2);
+  color: var(--mint-700);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.footer {
+  border-top: 2px solid rgba(45, 107, 69, 0.15);
+  padding-top: 24px;
+  margin-top: 12px;
+}
+
+.homeLink {
+  font-weight: 700;
+  color: var(--mint-700);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 200ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .homeLink:hover {
+    background-color: rgba(133, 198, 139, 0.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .document {
+    padding: 24px;
+    border-radius: 16px;
+  }
+}
